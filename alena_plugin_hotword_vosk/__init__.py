@@ -102,7 +102,7 @@ class ModelContainer:
         return engine.AcceptWaveform(audio)
 
     def get_model(
-        self, model_path: str, samples: List[str] = None
+        self, model_path: str, samples: List[str] = None, lang: str = None
     ) -> KaldiRecognizer:
         """Создает модель.
 
@@ -111,6 +111,7 @@ class ModelContainer:
         Args:
             model_path (str): путь до файла с моделью kaldi
             samples (List[str], optional): ключевые фразы. None по умолчанию.
+            lang (str): язык модели. None по умолчанию.
 
         Raises:
             FileNotFoundError: в случае, если не задан путь до модели
@@ -121,13 +122,15 @@ class ModelContainer:
         if model_path:
             if self.full_vocab:
                 model = KaldiRecognizer(
-                    KaldiModel(model_path), self.SAMPLE_RATE
+                    KaldiModel(model_path, lang=lang), self.SAMPLE_RATE
                 )
             else:
                 model = KaldiRecognizer(
-                    KaldiModel(model_path),
+                    KaldiModel(model_path, lang=lang),
                     self.SAMPLE_RATE,
-                    json.dumps(samples or self.samples),
+                    json.dumps(samples or self.samples, ensure_ascii=False)
+                    .encode("utf8")
+                    .decode(),
                 )
             return model
         else:
@@ -247,6 +250,15 @@ class VoskHotword(HotWordEngine):
         self.expected_duration = self.MAX_EXPECTED_DURATION
         self._counter = 0
         self._load_model()
+
+        if self.debug:
+            LOG.debug("========= Настройки плагина VoskHotword ========= ")
+            LOG.debug(f"    full_vocab: {self.full_vocab}")
+            LOG.debug(f"    rule: {self.rule}")
+            LOG.debug(f"    samples: {self.samples}")
+            LOG.debug(f"    model: {self.config.get('model')}")
+            LOG.debug(f"    time_between_checks: {self.time_between_checks}")
+            LOG.debug("")
 
     def _load_model(self) -> None:
         """Загружает языковую модель Vosk."""
