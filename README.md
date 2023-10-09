@@ -19,7 +19,7 @@
   },
   "алёна": {
     "hey_computer": {
-        "module": "alena-plugin-wakeword-vosk",
+        "module": "alena-plugin-hotword-vosk",
     }
   }
 ```
@@ -45,7 +45,7 @@
   },
   "hotwords": {
     "алёна": {
-        "module": "alena-plugin-wakeword-vosk",
+        "module": "alena-plugin-hotword-vosk",
         "full_vocab": true,
         "rule": "equals",
         "debug": true,
