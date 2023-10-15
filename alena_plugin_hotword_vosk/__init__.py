@@ -30,6 +30,8 @@ class MatchRule(str, enum.Enum):
 
 
 class ModelContainer:
+    """Класс для загрузки и хранения моделей kaldi."""
+
     UNK = "[unk]"
     SAMPLE_RATE = 16000
 
@@ -234,7 +236,7 @@ class VoskHotword(HotWordEngine):
     MAX_EXPECTED_DURATION = 3
 
     def __init__(
-        self, key_phrase: str = "алёна", config: dict = None, lang="ru-ru"
+        self, key_phrase: str = "алёна", config: dict = None, lang="ru-RU"
     ) -> None:
         config = config or {}
         super().__init__(key_phrase, config, lang)
