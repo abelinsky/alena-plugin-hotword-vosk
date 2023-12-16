@@ -6,7 +6,9 @@ from speech_recognition import AudioData
 from pathlib import Path
 from vosk import KaldiRecognizer, Model as KaldiModel
 
-from alena_core.modules.client.speech.hotword_engine import HotWordEngine
+from alena_plugin_manager.core.hotword_engine import HotWordEngine
+
+# from alena_core.modules.client.speech.hotword_engine import HotWordEngine
 from alena_core.utils.file import download_extract_zip, download_extract_tar
 from alena_core.utils.fuzzy_matching import fuzzy_match, MatchStrategy
 from alena_core.utils import LOG
