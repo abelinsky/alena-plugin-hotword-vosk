@@ -186,7 +186,8 @@ class ModelContainer:
             str: путь до локально скачанной модели
         """
         folder = join(xdg_data_home(), "vosk")
-        name = url.split("/")[-1].split(".")[0]
+        # name = url.split("/")[-1].split(".")[0]
+        name = ".".join(url.split("/")[-1].split(".")[:-1])
         model_path = join(folder, name)
         if not exists(model_path):
             LOG.info(f"Загрузка модели vosk из {url}")
